@@ -195,7 +195,12 @@ matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
 document.querySelectorAll(".hero .split-line > span").forEach((el, i) => {
   el.style.transitionDelay = `${0.15 + i * 0.12}s`;
 });
-window.addEventListener("load", () => document.body.classList.add("loaded"));
+// Start as soon as the font is ready (not the whole page) — max 1.2s wait on slow mobile data
+const startHero = () => document.body.classList.add("loaded");
+Promise.race([
+  document.fonts ? document.fonts.ready : Promise.resolve(),
+  new Promise((r) => setTimeout(r, 1200))
+]).then(() => requestAnimationFrame(startHero));
 
 // ===== Header: hide on scroll down, show on scroll up =====
 const nav = document.querySelector(".nav");
