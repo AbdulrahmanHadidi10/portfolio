@@ -320,6 +320,13 @@ ul { list-style: none; }
   font-size: .9rem; color: var(--sage);
 }
 .to-top:hover { color: var(--cream); }
+.footer-right { display: flex; align-items: center; gap: 1.25rem; }
+.dash-link {
+  display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid rgba(168,173,156,.3); opacity: .55;
+  transition: opacity .3s, color .3s, border-color .3s;
+}
+.dash-link:hover { opacity: 1; color: var(--cream); border-color: var(--sage); }
 
 /* ===== Scroll reveal ===== */
 .reveal { opacity: 0; transform: translateY(40px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
