@@ -77,7 +77,7 @@ async function putFile(path, text, sha, message, token) {
   const r = await api(`/contents/${path}`, token, { method: "PUT", body: JSON.stringify(body) });
   if (r.status === 409 || r.status === 422) throw new Error("The file changed on GitHub since it was loaded. Press Reload and try again.");
   if (r.status === 401) throw new Error("GitHub rejected the token — it may have expired. Replace it in Settings.");
-  if (r.status === 403 || r.status === 404) throw new Error("This token can't write to the portfolio repo. Check its permissions.");
+  if (r.status === 403 || r.status === 404) throw new Error("This token can't write to the portfolio repo. On GitHub, edit the token → Permissions → Contents → \"Read and write\" → Update, then try again.");
   if (!r.ok) throw new Error(`GitHub error (${r.status}).`);
   return (await r.json()).content.sha;
 }
