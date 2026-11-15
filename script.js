@@ -42,8 +42,7 @@ const I18N = {
     "contact.phone": "Phone",
     "contact.linkedinName": "Abdulrahman Hadidi",
     "footer.name": "Abdulrahman Fawzi Hadidi",
-    "footer.top": "Back to top ↑",
-    "footer.dash": "Dashboard"
+    "footer.top": "Back to top ↑"
   },
   ar: {
     "meta.title": "عبدالرحمن حديدي — معرض الأعمال",
@@ -87,8 +86,7 @@ const I18N = {
     "contact.phone": "الجوال",
     "contact.linkedinName": "عبدالرحمن حديدي",
     "footer.name": "عبدالرحمن فوزي حديدي",
-    "footer.top": "العودة للأعلى ↑",
-    "footer.dash": "لوحة التحكم"
+    "footer.top": "العودة للأعلى ↑"
   }
 };
 
