@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abdulrahman Hadidi — Portfolio</title>
+  <meta name="description" content="Portfolio of Abdulrahman Fawzi Hadidi, Computer Science student at King Abdulaziz University.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Apply saved/system theme + language before paint to avoid a flash
+    (function () {
+      var t, l, d = document.documentElement;
+      try { t = localStorage.getItem("theme"); l = localStorage.getItem("lang"); } catch (e) {}
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      var q = (location.search.match(/[?&]lang=(ar|en)\b/) || [])[1];
+      if (q) l = q;
+      if (!l) l = (navigator.language || "").toLowerCase().indexOf("ar") === 0 ? "ar" : "en";
+      d.setAttribute("data-theme", t);
+      d.setAttribute("lang", l);
+      d.setAttribute("dir", l === "ar" ? "rtl" : "ltr");
+    })();
+  </script>
+</head>
+<body>
+  <header class="nav">
+    <a href="#home" class="logo"><span data-i18n="logo">Abdulrahman</span><b>.</b></a>
+    <div class="nav-right">
+      <div class="seg lang-switch" role="radiogroup" aria-label="Language">
+        <span class="seg-thumb" aria-hidden="true"></span>
+        <button type="button" role="radio" data-lang-value="en" title="English">EN</button>
+        <button type="button" role="radio" data-lang-value="ar" title="العربية" class="ar-glyph">ع</button>
+      </div>
+      <div class="seg theme-switch" role="radiogroup" aria-label="Color theme">
+        <span class="seg-thumb" aria-hidden="true"></span>
+        <button type="button" role="radio" data-theme-value="light" data-i18n-label="theme.light" aria-label="Light mode" title="Light mode">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+        <button type="button" role="radio" data-theme-value="dark" data-i18n-label="theme.dark" aria-label="Night mode" title="Night mode">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>
+        </button>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+    <nav class="nav-links">
+      <a href="#about" data-i18n="nav.about">About</a>
+      <a href="#skills" data-i18n="nav.skills">Skills</a>
+      <a href="#projects" data-i18n="nav.projects">Projects</a>
+      <a href="#education" data-i18n="nav.education">Education</a>
+      <a href="#contact" class="nav-cta" data-i18n="nav.contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="home" class="hero">
+      <div class="container">
+        <p class="eyebrow split-line"><span data-i18n="hero.eyebrow">Computer Science · Jeddah, Saudi Arabia</span></p>
+        <h1 class="hero-title">
+          <span class="split-line"><span data-i18n="hero.l1">Abdulrahman</span></span>
+          <span class="split-line"><span data-i18n="hero.l2">Fawzi Hadidi<em>.</em></span></span>
+        </h1>
+        <div class="hero-bottom">
+          <p class="hero-sub split-line"><span data-i18n="hero.sub">Building clean, thoughtful software across the frontend and backend.</span></p>
+          <a href="#projects" class="arrow-link split-line"><span data-i18n="hero.cta">See my work <i>↓</i></span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Python</span><b>✦</b><span>Java</span><b>✦</b><span>JavaScript</span><b>✦</b><span>HTML</span><b>✦</b><span>CSS</span><b>✦</b><span>SQL</span><b>✦</b><span>OOP</span><b>✦</b><span>Data Structures</span><b>✦</b><span>Algorithms</span><b>✦</b>
+        <span>Python</span><b>✦</b><span>Java</span><b>✦</b><span>JavaScript</span><b>✦</b><span>HTML</span><b>✦</b><span>CSS</span><b>✦</b><span>SQL</span><b>✦</b><span>OOP</span><b>✦</b><span>Data Structures</span><b>✦</b><span>Algorithms</span><b>✦</b>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <div class="container split">
+        <p class="label reveal" data-i18n="about.label">01 — About</p>
+        <div>
+          <p class="statement reveal" data-i18n="about.text">
+            Fourth-year Computer Science student at King Abdulaziz University with knowledge of
+            backend and frontend development — and a solid grounding in OOP, databases,
+            data structures, and algorithms.
+          </p>
+          <div class="facts">
+            <div class="fact reveal"><span class="label" data-i18n="about.langsLabel">Languages</span><p data-i18n="about.langs">Arabic — Native<br>English — Good Working Proficiency</p></div>
+            <div class="fact reveal"><span class="label" data-i18n="about.certLabel">Certification</span><p data-i18n="about.cert">Python Courses<br>Coursera</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section">
+      <div class="container split">
+        <p class="label reveal" data-i18n="skills.label">02 — Skills</p>
+        <ul class="rows">
+          <li class="row reveal"><span class="row-title" data-i18n="skills.prog">Programming</span><span class="row-meta">Python · Java · JavaScript</span></li>
+          <li class="row reveal"><span class="row-title" data-i18n="skills.front">Frontend</span><span class="row-meta">HTML · CSS · JavaScript</span></li>
+          <li class="row reveal"><span class="row-title" data-i18n="skills.core">Core Concepts</span><span class="row-meta" data-i18n="skills.coreMeta">OOP · Data Structures · Algorithms</span></li>
+          <li class="row reveal"><span class="row-title" data-i18n="skills.db">Databases</span><span class="row-meta" data-i18n="skills.dbMeta">SQL · Database Fundamentals</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROJECTS (rendered from projects.js) -->
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="split">
+          <p class="label reveal" data-i18n="projects.label">03 — Projects</p>
+          <h2 class="section-title reveal" data-i18n="projects.title">Selected work</h2>
+        </div>
+        <div class="projects-grid" id="projects-grid"></div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education" class="section">
+      <div class="container split">
+        <p class="label reveal" data-i18n="edu.label">04 — Education</p>
+        <ul class="rows">
+          <li class="row reveal">
+            <span class="row-title" data-i18n="edu.degree">Bachelor of Computer Science</span>
+            <span class="row-meta" data-i18n="edu.degreeMeta">King Abdulaziz University · Fourth-Year Student</span>
+          </li>
+          <li class="row reveal">
+            <span class="row-title" data-i18n="edu.python">Python Courses</span>
+            <span class="row-meta" data-i18n="edu.pythonMeta">Coursera · Certification</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+      <div class="container">
+        <p class="label reveal" data-i18n="contact.label">05 — Contact</p>
+        <h2 class="contact-title reveal" data-i18n="contact.title">Let's work<br>together.</h2>
+        <a href="mailto:abdulrahman.f.hadidi@gmail.com" class="big-link reveal"><bdi>abdulrahman.f.hadidi@gmail.com</bdi> <i>↗</i></a>
+        <ul class="contact-list">
+          <li class="reveal"><a href="tel:+966559006211"><span data-i18n="contact.phone">Phone</span><bdi>0559006211</bdi></a></li>
+          <li class="reveal"><a href="https://github.com/AbdulrahmanHadidi10" target="_blank" rel="noopener"><span>GitHub</span><bdi>AbdulrahmanHadidi10</bdi></a></li>
+          <li class="reveal"><a href="https://www.linkedin.com/in/abdulrahman-hadidi-591491365/" target="_blank" rel="noopener"><span>LinkedIn</span><bdi data-i18n="contact.linkedinName">Abdulrahman Hadidi</bdi></a></li>
+        </ul>
+      </div>
+      <footer class="footer container">
+        <p>&copy; <span id="year"></span> <span data-i18n="footer.name">Abdulrahman Fawzi Hadidi</span></p>
+        <a href="#home" class="to-top" data-i18n="footer.top">Back to top ↑</a>
+      </footer>
+    </section>
+  </main>
+
+  <script src="projects.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

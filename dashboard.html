@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    (function () {
+      var t;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+  <style>
+    body { min-height: 100vh; }
+    .dash { width: min(1180px, 100% - 2rem); margin-inline: auto; padding-block: 2rem 4rem; }
+    [hidden] { display: none !important; }
+
+    .gate { min-height: 100vh; display: grid; place-items: center; padding: 1.5rem; }
+    .gate-card {
+      width: min(440px, 100%); background: var(--surface); border: 1px solid var(--line);
+      border-radius: 22px; padding: 2rem;
+    }
+    .gate-card h1 { font-size: 2rem; letter-spacing: -.03em; line-height: 1.1; margin-bottom: .5rem; }
+    .gate-card > p { color: var(--muted); margin-bottom: 1.5rem; }
+    .lock-icon {
+      width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center;
+      background: var(--fill); color: var(--on-fill); margin-bottom: 1.25rem;
+    }
+
+    .field { display: flex; flex-direction: column; gap: .35rem; margin-bottom: 1rem; }
+    .field label { font-size: .85rem; font-weight: 600; }
+    .field small { color: var(--muted); font-size: .78rem; }
+    .field small a { text-decoration: underline; }
+    input, textarea {
+      font: inherit; color: var(--fg); background: var(--bg);
+      border: 1px solid var(--line); border-radius: 10px; padding: .7rem .85rem; width: 100%;
+      transition: border-color .2s;
+    }
+    input:focus, textarea:focus { outline: none; border-color: var(--fg); }
+    textarea { resize: vertical; min-height: 92px; }
+    [dir="rtl"], .rtl { direction: rtl; }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    fieldset { border: 1px dashed var(--line); border-radius: 14px; padding: 1rem 1rem 0; margin-bottom: 1rem; }
+    legend { font-size: .8rem; font-weight: 600; color: var(--muted); padding-inline: .4rem; }
+
+    .btn {
+      font: inherit; font-weight: 600; font-size: .9rem; cursor: pointer;
+      border-radius: 999px; padding: .7rem 1.3rem; border: 1px solid var(--fg);
+      background: transparent; color: var(--fg);
+      transition: transform .3s var(--ease), opacity .2s, background-color .2s, color .2s;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+    .btn-solid { background: var(--fill); color: var(--on-fill); border-color: var(--fill); }
+    .btn-danger { border-color: #b4462e; color: #b4462e; }
+    .btn-danger.armed { background: #b4462e; color: #fff; }
+    .btn-sm { padding: .4rem .85rem; font-size: .8rem; }
+    .btn-block { width: 100%; }
+    .link-btn { background: none; border: 0; color: var(--muted); font: inherit; font-size: .85rem; cursor: pointer; text-decoration: underline; }
+
+    .msg { font-size: .88rem; margin-top: .75rem; min-height: 1.2em; }
+    .msg.err { color: #c0533a; }
+    .msg.ok { color: var(--muted); }
+
+    .topbar {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
+      padding-bottom: 1.5rem; margin-bottom: 2rem; border-bottom: 1px solid var(--line);
+    }
+    .topbar h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); letter-spacing: -.035em; line-height: 1; }
+    .badge {
+      display: inline-flex; align-items: center; gap: .4rem; margin-top: .5rem;
+      font-size: .8rem; color: var(--muted);
+    }
+    .badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+    .badge.live::before { background: #6fa83a; }
+    .top-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
+
+    .layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem; align-items: start; }
+    .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 1.5rem; }
+    .panel h2 { font-size: 1.25rem; letter-spacing: -.02em; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .form-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+    .plist { display: flex; flex-direction: column; gap: .75rem; }
+    .pitem {
+      display: grid; grid-template-columns: 1fr auto; gap: .75rem; align-items: center;
+      padding: 1rem; border: 1px solid var(--line); border-radius: 14px; background: var(--bg);
+    }
+    .pitem.editing { border-color: var(--fg); }
+    .pitem h3 { font-size: 1rem; line-height: 1.3; }
+    .pitem .ar { color: var(--muted); font-size: .85rem; direction: rtl; text-align: start; }
+    .pitem .tags { margin-top: .5rem; }
+    .pitem-actions { display: flex; flex-wrap: wrap; gap: .35rem; justify-content: flex-end; }
+    .icon-btn {
+      width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--line);
+      background: none; color: var(--fg); cursor: pointer; font-size: .9rem;
+    }
+    .icon-btn:disabled { opacity: .3; cursor: default; }
+    .empty { color: var(--muted); padding: 1.5rem; text-align: center; border: 1px dashed var(--line); border-radius: 14px; }
+
+    .publish-bar {
+      position: sticky; bottom: 1rem; margin-top: 2rem;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
+      background: var(--band); color: var(--on-band); border-radius: 18px; padding: 1rem 1.25rem;
+    }
+    .publish-bar .btn { border-color: var(--cream); color: var(--cream); }
+    .publish-bar .btn-solid { background: var(--cream); color: var(--olive); }
+    .dirty-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #e0b84a; margin-inline-end: .4rem; }
+
+    details { margin-top: 2rem; }
+    summary { cursor: pointer; font-weight: 600; }
+    .settings { margin-top: 1rem; display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+
+    @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } }
+    @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } .gate-card { padding: 1.5rem; } }
+  </style>
+</head>
+<body>
+
+  <!-- ===== First-time setup ===== -->
+  <section class="gate" id="setup" hidden>
+    <form class="gate-card" id="setup-form" autocomplete="off">
+      <div class="lock-icon">🔒</div>
+      <h1>Set up your dashboard</h1>
+      <p>Choose a password. It encrypts your settings on this device — without it, the dashboard can't be opened.</p>
+
+      <div class="field">
+        <label for="s-pass">Password</label>
+        <input id="s-pass" type="password" minlength="8" required autocomplete="new-password">
+        <small>At least 8 characters.</small>
+      </div>
+      <div class="field">
+        <label for="s-pass2">Confirm password</label>
+        <input id="s-pass2" type="password" minlength="8" required autocomplete="new-password">
+      </div>
+
+      <fieldset>
+        <legend>Publish to GitHub (optional)</legend>
+        <div class="field">
+          <label for="s-token">GitHub access token</label>
+          <input id="s-token" type="password" placeholder="github_pat_…" autocomplete="off">
+          <small>Fine-grained token with <b>Contents: Read and write</b> on your portfolio repo only.
+            <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Create one</a>.
+            Leave empty to work locally and download the file instead.</small>
+        </div>
+        <div class="row2">
+          <div class="field"><label for="s-owner">Username</label><input id="s-owner" value="AbdulrahmanHadidi10"></div>
+          <div class="field"><label for="s-repo">Repository</label><input id="s-repo" value="portfolio"></div>
+        </div>
+        <div class="field"><label for="s-branch">Branch</label><input id="s-branch" value="main"></div>
+      </fieldset>
+
+      <button class="btn btn-solid btn-block" type="submit">Create dashboard</button>
+      <p class="msg" id="setup-msg"></p>
+    </form>
+  </section>
+
+  <!-- ===== Unlock ===== -->
+  <section class="gate" id="unlock" hidden>
+    <form class="gate-card" id="unlock-form">
+      <div class="lock-icon">🔒</div>
+      <h1>Dashboard locked</h1>
+      <p>Enter your password to manage projects.</p>
+      <div class="field">
+        <label for="u-pass">Password</label>
+        <input id="u-pass" type="password" required autocomplete="current-password" autofocus>
+      </div>
+      <button class="btn btn-solid btn-block" type="submit" id="unlock-btn">Unlock</button>
+      <p class="msg" id="unlock-msg"></p>
+      <button type="button" class="link-btn" id="forgot">Forgot password? Reset this device</button>
+    </form>
+  </section>
+
+  <!-- ===== Dashboard ===== -->
+  <div class="dash" id="app" hidden>
+    <header class="topbar">
+      <div>
+        <h1>Projects dashboard</h1>
+        <span class="badge" id="mode-badge"></span>
+      </div>
+      <div class="top-actions">
+        <a class="btn btn-sm" href="index.html#projects" target="_blank">View site ↗</a>
+        <button class="btn btn-sm" id="reload-btn" type="button">Reload</button>
+        <button class="btn btn-sm btn-solid" id="lock-btn" type="button">Lock</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <!-- Form -->
+      <form class="panel" id="project-form" autocomplete="off">
+        <h2><span id="form-title">Add a project</span></h2>
+        <div class="row2">
+          <div class="field"><label for="f-title-en">Title (English) *</label><input id="f-title-en" required></div>
+          <div class="field"><label for="f-title-ar">Title (Arabic)</label><input id="f-title-ar" class="rtl"></div>
+        </div>
+        <div class="field"><label for="f-desc-en">Description (English)</label><textarea id="f-desc-en"></textarea></div>
+        <div class="field"><label for="f-desc-ar">Description (Arabic)</label><textarea id="f-desc-ar" class="rtl"></textarea></div>
+        <div class="field">
+          <label for="f-tags">Tags</label>
+          <input id="f-tags" placeholder="HTML, CSS, JavaScript">
+          <small>Separate with commas.</small>
+        </div>
+        <div class="field"><label for="f-link">Link</label><input id="f-link" type="url" placeholder="https://github.com/…"></div>
+        <div class="field">
+          <label for="f-image">Image URL</label>
+          <input id="f-image" placeholder="https://… or images/my-project.png">
+          <small>Optional. Leave empty for the default green cover.</small>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-solid" type="submit" id="save-btn">Add project</button>
+          <button class="btn" type="button" id="cancel-btn" hidden>Cancel</button>
+        </div>
+      </form>
+
+      <!-- List -->
+      <section class="panel">
+        <h2>Your projects <span class="label" id="count"></span></h2>
+        <div class="plist" id="plist"></div>
+      </section>
+    </div>
+
+    <div class="publish-bar">
+      <span id="publish-status">All changes saved.</span>
+      <div class="top-actions">
+        <button class="btn btn-sm" id="download-btn" type="button">Download projects.js</button>
+        <button class="btn btn-sm btn-solid" id="publish-btn" type="button">Publish to site</button>
+      </div>
+    </div>
+
+    <details>
+      <summary>Settings</summary>
+      <div class="settings">
+        <form class="panel" id="pass-form" autocomplete="off">
+          <h2>Change password</h2>
+          <div class="field"><label for="p-new">New password</label><input id="p-new" type="password" minlength="8" required autocomplete="new-password"></div>
+          <div class="field"><label for="p-new2">Confirm</label><input id="p-new2" type="password" minlength="8" required autocomplete="new-password"></div>
+          <button class="btn btn-sm btn-solid" type="submit">Update password</button>
+          <p class="msg" id="pass-msg"></p>
+        </form>
+        <div class="panel">
+          <h2>This device</h2>
+          <p class="label" style="text-transform:none;letter-spacing:0;margin-bottom:1rem">Removes the saved password and GitHub token from this browser. Your projects are not deleted.</p>
+          <button class="btn btn-sm btn-danger" type="button" id="reset-btn">Reset this device</button>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <script src="projects.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
