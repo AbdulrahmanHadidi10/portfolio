@@ -1,6 +1,6 @@
 /* ===== Palette ===== */
 :root {
-  --olive: #172600;   /* darker deep green */
+  --olive: #1F3103;   /* deep green */
   --moss: #434939;    /* grey olive */
   --sage: #A8AD9C;    /* light sage */
   --cream: #F6FCEA;   /* cream */
@@ -20,7 +20,7 @@
   --on-fill: var(--cream);
   --band: var(--olive);        /* marquee + contact section */
   --on-band: var(--cream);
-  --line: rgba(23, 38, 0, 0.14);
+  --line: rgba(31, 49, 3, 0.14);
   --nav-bg: rgba(246, 252, 234, 0.85);
 }
 
