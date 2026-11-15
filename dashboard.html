@@ -22,7 +22,7 @@
     .dash { width: min(1180px, 100% - 2rem); margin-inline: auto; padding-block: 2rem 4rem; }
     [hidden] { display: none !important; }
 
-    .gate { min-height: 100vh; display: grid; place-items: center; padding: 1.5rem; }
+    .gate { min-height: 100vh; min-height: 100svh; display: grid; place-items: center; padding: 1.5rem; }
     .gate-card {
       width: min(440px, 100%); background: var(--surface); border: 1px solid var(--line);
       border-radius: 22px; padding: 2rem;
@@ -33,27 +33,31 @@
       width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center;
       background: var(--fill); color: var(--on-fill); margin-bottom: 1.25rem;
     }
+    .spinner {
+      width: 28px; height: 28px; border-radius: 50%; margin: 0 auto 1rem;
+      border: 3px solid var(--line); border-top-color: var(--fg); animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     .field { display: flex; flex-direction: column; gap: .35rem; margin-bottom: 1rem; }
     .field label { font-size: .85rem; font-weight: 600; }
     .field small { color: var(--muted); font-size: .78rem; }
-    .field small a { text-decoration: underline; }
+    .field small a, .help a { text-decoration: underline; }
     input, textarea {
-      font: inherit; color: var(--fg); background: var(--bg);
+      font: inherit; font-size: 16px; /* 16px stops iPhone from zooming in on focus */
+      color: var(--fg); background: var(--bg);
       border: 1px solid var(--line); border-radius: 10px; padding: .7rem .85rem; width: 100%;
       transition: border-color .2s;
     }
     input:focus, textarea:focus { outline: none; border-color: var(--fg); }
     textarea { resize: vertical; min-height: 92px; }
-    [dir="rtl"], .rtl { direction: rtl; }
+    .rtl { direction: rtl; }
     .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    fieldset { border: 1px dashed var(--line); border-radius: 14px; padding: 1rem 1rem 0; margin-bottom: 1rem; }
-    legend { font-size: .8rem; font-weight: 600; color: var(--muted); padding-inline: .4rem; }
 
     .btn {
       font: inherit; font-weight: 600; font-size: .9rem; cursor: pointer;
       border-radius: 999px; padding: .7rem 1.3rem; border: 1px solid var(--fg);
-      background: transparent; color: var(--fg);
+      background: transparent; color: var(--fg); text-align: center;
       transition: transform .3s var(--ease), opacity .2s, background-color .2s, color .2s;
     }
     .btn:hover { transform: translateY(-2px); }
@@ -61,13 +65,19 @@
     .btn-solid { background: var(--fill); color: var(--on-fill); border-color: var(--fill); }
     .btn-danger { border-color: #b4462e; color: #b4462e; }
     .btn-danger.armed { background: #b4462e; color: #fff; }
-    .btn-sm { padding: .4rem .85rem; font-size: .8rem; }
+    .btn-sm { padding: .45rem .9rem; font-size: .8rem; }
     .btn-block { width: 100%; }
-    .link-btn { background: none; border: 0; color: var(--muted); font: inherit; font-size: .85rem; cursor: pointer; text-decoration: underline; }
+    .link-btn { background: none; border: 0; color: var(--muted); font: inherit; font-size: .85rem; cursor: pointer; text-decoration: underline; padding: 0; }
 
     .msg { font-size: .88rem; margin-top: .75rem; min-height: 1.2em; }
     .msg.err { color: #c0533a; }
     .msg.ok { color: var(--muted); }
+    .help {
+      font-size: .85rem; color: var(--muted); margin-top: 1rem; padding: .9rem 1rem;
+      border: 1px dashed var(--line); border-radius: 12px;
+    }
+    .help ol { padding-inline-start: 1.1rem; margin-top: .4rem; }
+    .help li { list-style: decimal; margin-bottom: .2rem; }
 
     .topbar {
       display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
@@ -78,13 +88,13 @@
       display: inline-flex; align-items: center; gap: .4rem; margin-top: .5rem;
       font-size: .8rem; color: var(--muted);
     }
-    .badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-    .badge.live::before { background: #6fa83a; }
+    .badge::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #6fa83a; }
     .top-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
 
     .layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2rem; align-items: start; }
     .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 1.5rem; }
     .panel h2 { font-size: 1.25rem; letter-spacing: -.02em; margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .panel > p { color: var(--muted); font-size: .88rem; margin: -.5rem 0 1rem; }
     .form-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
 
     .plist { display: flex; flex-direction: column; gap: .75rem; }
@@ -98,7 +108,7 @@
     .pitem .tags { margin-top: .5rem; }
     .pitem-actions { display: flex; flex-wrap: wrap; gap: .35rem; justify-content: flex-end; }
     .icon-btn {
-      width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--line);
+      width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line);
       background: none; color: var(--fg); cursor: pointer; font-size: .9rem;
     }
     .icon-btn:disabled { opacity: .3; cursor: default; }
@@ -115,46 +125,52 @@
 
     details { margin-top: 2rem; }
     summary { cursor: pointer; font-weight: 600; }
-    .settings { margin-top: 1rem; display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .settings { margin-top: 1rem; display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 
     @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } }
-    @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } .gate-card { padding: 1.5rem; } }
+    @media (max-width: 600px) {
+      .row2 { grid-template-columns: 1fr; gap: 0; }
+      .gate-card { padding: 1.5rem; }
+      .pitem { grid-template-columns: 1fr; }
+      .pitem-actions { justify-content: flex-start; }
+      .publish-bar { bottom: .5rem; }
+      .publish-bar .top-actions { width: 100%; }
+      .publish-bar .top-actions .btn { flex: 1; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- ===== First-time setup ===== -->
+  <!-- ===== Loading ===== -->
+  <section class="gate" id="loading">
+    <div class="gate-card" style="text-align:center">
+      <div class="spinner"></div>
+      <p class="msg ok" id="loading-msg" style="margin:0">Loading…</p>
+    </div>
+  </section>
+
+  <!-- ===== One-time setup (only shown until vault.json exists) ===== -->
   <section class="gate" id="setup" hidden>
     <form class="gate-card" id="setup-form" autocomplete="off">
       <div class="lock-icon">🔒</div>
       <h1>Set up your dashboard</h1>
-      <p>Choose a password. It encrypts your settings on this device — without it, the dashboard can't be opened.</p>
+      <p>You only do this once. After that, the same password opens the dashboard on any device.</p>
 
       <div class="field">
         <label for="s-pass">Password</label>
-        <input id="s-pass" type="password" minlength="8" required autocomplete="new-password">
-        <small>At least 8 characters.</small>
+        <input id="s-pass" type="password" minlength="12" required autocomplete="new-password">
+        <small>At least 12 characters — a short sentence works well, e.g. <i>green-olive-desk-2026</i>.</small>
       </div>
       <div class="field">
         <label for="s-pass2">Confirm password</label>
-        <input id="s-pass2" type="password" minlength="8" required autocomplete="new-password">
+        <input id="s-pass2" type="password" minlength="12" required autocomplete="new-password">
       </div>
-
-      <fieldset>
-        <legend>Publish to GitHub (optional)</legend>
-        <div class="field">
-          <label for="s-token">GitHub access token</label>
-          <input id="s-token" type="password" placeholder="github_pat_…" autocomplete="off">
-          <small>Fine-grained token with <b>Contents: Read and write</b> on your portfolio repo only.
-            <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Create one</a>.
-            Leave empty to work locally and download the file instead.</small>
-        </div>
-        <div class="row2">
-          <div class="field"><label for="s-owner">Username</label><input id="s-owner" value="AbdulrahmanHadidi10"></div>
-          <div class="field"><label for="s-repo">Repository</label><input id="s-repo" value="portfolio"></div>
-        </div>
-        <div class="field"><label for="s-branch">Branch</label><input id="s-branch" value="main"></div>
-      </fieldset>
+      <div class="field">
+        <label for="s-token">GitHub access token</label>
+        <input id="s-token" type="password" placeholder="github_pat_…" required autocomplete="off">
+        <small>Fine-grained token with <b>Contents: Read and write</b> on the <b>portfolio</b> repo.
+          <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">Create one</a>.</small>
+      </div>
 
       <button class="btn btn-solid btn-block" type="submit">Create dashboard</button>
       <p class="msg" id="setup-msg"></p>
@@ -169,11 +185,20 @@
       <p>Enter your password to manage projects.</p>
       <div class="field">
         <label for="u-pass">Password</label>
-        <input id="u-pass" type="password" required autocomplete="current-password" autofocus>
+        <input id="u-pass" type="password" required autocomplete="current-password">
       </div>
       <button class="btn btn-solid btn-block" type="submit" id="unlock-btn">Unlock</button>
       <p class="msg" id="unlock-msg"></p>
-      <button type="button" class="link-btn" id="forgot">Forgot password? Reset this device</button>
+      <button type="button" class="link-btn" id="forgot">Forgot password?</button>
+      <div class="help" id="forgot-help" hidden>
+        Your password can't be recovered — it isn't stored anywhere. To start over:
+        <ol>
+          <li>Open <a href="https://github.com/AbdulrahmanHadidi10/portfolio/blob/main/vault.json" target="_blank" rel="noopener">vault.json on GitHub</a>.</li>
+          <li>Click the <b>⋯</b> menu → <b>Delete file</b> → <b>Commit changes</b>.</li>
+          <li>Refresh this page and set up a new password.</li>
+        </ol>
+        Your projects are not affected.
+      </div>
     </form>
   </section>
 
@@ -226,9 +251,9 @@
     </div>
 
     <div class="publish-bar">
-      <span id="publish-status">All changes saved.</span>
+      <span id="publish-status">Everything is published.</span>
       <div class="top-actions">
-        <button class="btn btn-sm" id="download-btn" type="button">Download projects.js</button>
+        <button class="btn btn-sm" id="download-btn" type="button">Download backup</button>
         <button class="btn btn-sm btn-solid" id="publish-btn" type="button">Publish to site</button>
       </div>
     </div>
@@ -238,21 +263,24 @@
       <div class="settings">
         <form class="panel" id="pass-form" autocomplete="off">
           <h2>Change password</h2>
-          <div class="field"><label for="p-new">New password</label><input id="p-new" type="password" minlength="8" required autocomplete="new-password"></div>
-          <div class="field"><label for="p-new2">Confirm</label><input id="p-new2" type="password" minlength="8" required autocomplete="new-password"></div>
+          <p>Applies to every device.</p>
+          <div class="field"><label for="p-new">New password</label><input id="p-new" type="password" minlength="12" required autocomplete="new-password"></div>
+          <div class="field"><label for="p-new2">Confirm</label><input id="p-new2" type="password" minlength="12" required autocomplete="new-password"></div>
           <button class="btn btn-sm btn-solid" type="submit">Update password</button>
           <p class="msg" id="pass-msg"></p>
         </form>
-        <div class="panel">
-          <h2>This device</h2>
-          <p class="label" style="text-transform:none;letter-spacing:0;margin-bottom:1rem">Removes the saved password and GitHub token from this browser. Your projects are not deleted.</p>
-          <button class="btn btn-sm btn-danger" type="button" id="reset-btn">Reset this device</button>
-        </div>
+        <form class="panel" id="token-form" autocomplete="off">
+          <h2>Replace GitHub token</h2>
+          <p>Use this when your token expires or you create a new one.</p>
+          <div class="field"><label for="t-new">New token</label><input id="t-new" type="password" placeholder="github_pat_…" required></div>
+          <div class="field"><label for="t-pass">Your password</label><input id="t-pass" type="password" required autocomplete="current-password"></div>
+          <button class="btn btn-sm btn-solid" type="submit">Save token</button>
+          <p class="msg" id="token-msg"></p>
+        </form>
       </div>
     </details>
   </div>
 
-  <script src="projects.js"></script>
   <script src="dashboard.js"></script>
 </body>
 </html>
